@@ -15,16 +15,16 @@
 #endif
 
 #define SAMPLE_RATE       (44100)
-#define FRAMES_PER_BUFFER   (256)
+#define FRAMES_PER_BUFFER   (512)
 /* #define DITHER_FLAG     (paDitherOff)  */
 #define DITHER_FLAG           (0)
 
-#if 1
+#if 0
 #define PA_SAMPLE_TYPE  paFloat32
 #define SAMPLE_SIZE (4)
 #define SAMPLE_SILENCE  (0.0f)
 #define PRINTF_S_FORMAT "%.8f"
-#elif 0
+#elif 1
 #define PA_SAMPLE_TYPE  paInt16
 #define SAMPLE_SIZE (2)
 #define SAMPLE_SILENCE  (0)
@@ -245,6 +245,11 @@ void list_devices(int n_devices, bool extra_info)
     printf("----------------------------------------------\n");
 }
 
+int device_walkthrough(int* input, int* output)
+{
+
+}
+
 int start_stream(int in, int out)
 {
     PaStreamParameters in_params;
@@ -301,7 +306,7 @@ int start_stream(int in, int out)
         return 1;
     }
 
-    memset(sample_block, SAMPLE_SILENCE, n_bytes);
+    memset(sample_block, 0, n_bytes);
 
     err = Pa_StartStream(stream);
     if (err != paNoError)
@@ -373,6 +378,10 @@ int main(int argc, char** argv)
         else if (strncmp(argv[i], "-o", 2) == 0)
         {
             output_device = atoi(argv[i] + 3);
+        }
+        else if (strncmp(argv[i], "-w", 2) == 0)
+        {
+            device_walkthrough(&input_device, &output_device);
         }
         else
         {
