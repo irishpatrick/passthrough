@@ -54,7 +54,7 @@ static void PrintSupportedStandardSampleRates(
 {
     static double standardSampleRates[] = {
         8000.0, 9600.0, 11025.0, 12000.0, 16000.0, 22050.0, 24000.0, 32000.0,
-        44100.0, 48000.0, 88200.0, 96000.0, 192000.0, -1 /* negative terminated  list */
+        44100.0, 48000.0, 88200.0, 96000.0, 192000.0, -1 /* negative terminated list */
     };
     int     i, printCount;
     PaError err;
@@ -373,11 +373,11 @@ int main(int argc, char** argv)
         }
         else if (strncmp(argv[i], "-i", 2) == 0)
         {
-            input_device = atoi(argv[i] + 3);
+            input_device = atoi(argv[i] + 2);
         }
         else if (strncmp(argv[i], "-o", 2) == 0)
         {
-            output_device = atoi(argv[i] + 3);
+            output_device = atoi(argv[i] + 2);
         }
         else if (strncmp(argv[i], "-w", 2) == 0)
         {
@@ -391,6 +391,7 @@ int main(int argc, char** argv)
 
     if (start)
     {
+        printf("starting with input=%d, output=%d\n", input_device, output_device);
         request_high_priority();
         start_stream(input_device, output_device);
     }
